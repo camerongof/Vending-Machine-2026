@@ -15,6 +15,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="consoleUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Vending Machine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -23,8 +26,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="consoleUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="machineHeader.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

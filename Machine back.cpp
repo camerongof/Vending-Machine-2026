@@ -1,789 +1,183 @@
-#pragma once
-
 #include "machineHeader.h"
-#include <iostream>
+
 #include <iomanip>
-#include <stack>
+#include <ostream>
+#include <random>
 
 
 VendingMachine::VendingMachine()
 {
-	programStart();
+	setPrices(); // assign prices once when the vending machine is created
 }
 
-void VendingMachine::programStart()
+void VendingMachine::setPrices()
 {
-	setPrice();
-}
+	random_device randomSource; // receives a seed value from the operating system
+	mt19937 randomEngine(randomSource()); // generates the random values used for each cell
+	uniform_int_distribution<int> quarterUnits(1, 20); // represents prices from one to twenty quarters
 
-/*void VendingMachine::intial()
-{
-	int i, n;
-
-	// the below will check if any cell/stack is empty and if so will load that cell with the value 0
-	//row A
-	if (i == 0)
+	for (auto& row : slots) // loop through each row in the fixed vending machine grid
 	{
-		if (n == 0)
+		for (auto& slot : row) // loop through each cell in the current row
 		{
-			while (a1.empty())
-			{
-				a1.push(0);
-			}
-		}
-		else if (n == 1)
-		{
-			while (a2.empty())
-			{
-				a2.push(0);
-			}
-		}
-		else if (n == 2)
-		{
-			while (a3.empty())
-			{
-				a3.push(0);
-			}
-		}
-		else if (n == 3)
-		{
-			while (a4.empty())
-			{
-				a4.push(0);
-			}
-		}
-		else if (n == 4)
-		{
-			while (a5.empty())
-			{
-				a5.push(0);
-			}
-		}
-	} // row A
-	//row B
-	else if (i == 1)
-	{
-		if (n == 0)
-		{
-			while (b1.empty())
-			{
-				b1.push(0);
-			}
-		}
-		else if (n == 1)
-		{
-			while (b2.empty())
-			{
-				b2.push(0);
-			}
-		}
-		else if (n == 2)
-		{
-			while (b3.empty())
-			{
-				b3.push(0);
-			}
-		}
-		else if (n == 3)
-		{
-			while (b4.empty())
-			{
-				b4.push(0);
-			}
-		}
-		else if (n == 4)
-		{
-			while (b5.empty())
-			{
-				b5.push(0);
-			}
-		}
-	}
-	//row C
-	else if (i == 2)
-	{
-		if (n == 0)
-		{
-			while (c1.empty())
-			{
-				c1.push(0);
-			}
-		}
-		else if (n == 1)
-		{
-			while (c2.empty())
-			{
-				c2.push(0);
-			}
-		}
-		else if (n == 2)
-		{
-			while (c3.empty())
-			{
-				c3.push(0);
-			}
-		}
-		else if (n == 3)
-		{
-			while (c4.empty())
-			{
-				c4.push(0);
-			}
-		}
-		else if (n == 4)
-		{
-			while (c5.empty())
-			{
-				c5.push(0);
-			}
-		}
-	}
-	//row D
-	else if (i == 3)
-	{
-		if (n == 0)
-		{
-			while (d1.empty())
-			{
-				d1.push(0);
-			}
-		}
-		else if (n == 1)
-		{
-			while (d2.empty())
-			{
-				d2.push(0);
-			}
-		}
-		else if (n == 2)
-		{
-			while (d3.empty())
-			{
-				d3.push(0);
-			}
-		}
-		else if (n == 3)
-		{
-			while (d4.empty())
-			{
-				d4.push(0);
-			}
-		}
-		else if (n == 4)
-		{
-			while (d5.empty())
-			{
-				d5.push(0);
-			}
-		}
-	}
-	//row E
-	else if (i == 4)
-	{
-		if (n == 0)
-		{
-			while (e1.empty())
-			{
-				e1.push(0);
-			}
-		}
-		else if (n == 1)
-		{
-			while (e2.empty())
-			{
-				e2.push(0);
-			}
-		}
-		else if (n == 2)
-		{
-			while (e3.empty())
-			{
-				e3.push(0);
-			}
-		}
-		else if (n == 3)
-		{
-			while (e4.empty())
-			{
-				e4.push(0);
-			}
-		}
-		else if (n == 4)
-		{
-			while (e5.empty())
-			{
-				e5.push(0);
-			}
-		}
-	}
-	//row F
-	else if (i == 5)
-	{
-		if (n == 0)
-		{
-			while (f1.empty())
-			{
-				f1.push(0);
-			}
-		}
-		else if (n == 1)
-		{
-			while (f2.empty())
-			{
-				f2.push(0);
-			}
-		}
-		else if (n == 2)
-		{
-			while (f3.empty())
-			{
-				f3.push(0);
-			}
-		}
-		else if (n == 3)
-		{
-			while (f4.empty())
-			{
-				f4.push(0);
-			}
-		}
-		else if (n == 4)
-		{
-			while (f5.empty())
-			{
-				f5.push(0);
-			}
-		}
-	}
-	//row G
-	else if (i == 6)
-	{
-		if (n == 0)
-		{
-			while (g1.empty())
-			{
-				g1.push(0);
-			}
-		}
-		else if (n == 1)
-		{
-			while (g2.empty())
-			{
-				g2.push(0);
-			}
-		}
-		else if (n == 2)
-		{
-			while (g3.empty())
-			{
-				g3.push(0);
-			}
-		}
-		else if (n == 3)
-		{
-			while (g4.empty())
-			{
-				g4.push(0);
-			}
-		}
-		else if (n == 4)
-		{
-			while (g5.empty())
-			{
-				g5.push(0);
-			}
-		}
-	}
-}*/
-
-void VendingMachine::setPrice()
-{
-	// loop to randomly assign a price between .25 and $5 to every cell of the price array, prices are random at the start of program
-	for (int i = 0; i < R; i++)
-	{
-		for (int n = 0; n < C; n++)
-		{
-			price[i][n] = (rand() % 20 + 1) * .25;
+			slot.priceInCents = quarterUnits(randomEngine) * 25; // convert the random quarter amount to cents
 		}
 	}
 }
 
-double VendingMachine::returnPrice(int i, int n)
+void VendingMachine::loadAll()
 {
-	return price[i][n];
+	for (auto& row : slots) // loop through each row that needs to be loaded
+	{
+		for (auto& slot : row) // loop through each cell in the current row
+		{
+			slot.quantity = MAX_INVENTORY; // fill the cell to the same maximum used by the original stacks
+		}
+	}
 }
 
-// function to be used with display function to show the updated value for any cell at any time
-int VendingMachine::update(int i, int n)
+void VendingMachine::unloadAll()
 {
-	// the below will check if any cell/stack is empty and if so will load that cell with the value 0
-	{//row A
-		if (i == 0)
+	for (auto& row : slots) // loop through each row that needs to be unloaded
+	{
+		for (auto& slot : row) // loop through each cell in the current row
 		{
-			if (n == 0)
-			{
-				while (a1.empty())
-				{
-					a1.push(0);
-				}
-			}
-			else if (n == 1)
-			{
-				while (a2.empty())
-				{
-					a2.push(0);
-				}
-			}
-			else if (n == 2)
-			{
-				while (a3.empty())
-				{
-					a3.push(0);
-				}
-			}
-			else if (n == 3)
-			{
-				while (a4.empty())
-				{
-					a4.push(0);
-				}
-			}
-			else if (n == 4)
-			{
-				while (a5.empty())
-				{
-					a5.push(0);
-				}
-			}
-		} // row A
-		//row B
-		else if (i == 1)
-		{
-			if (n == 0)
-			{
-				while (b1.empty())
-				{
-					b1.push(0);
-				}
-			}
-			else if (n == 1)
-			{
-				while (b2.empty())
-				{
-					b2.push(0);
-				}
-			}
-			else if (n == 2)
-			{
-				while (b3.empty())
-				{
-					b3.push(0);
-				}
-			}
-			else if (n == 3)
-			{
-				while (b4.empty())
-				{
-					b4.push(0);
-				}
-			}
-			else if (n == 4)
-			{
-				while (b5.empty())
-				{
-					b5.push(0);
-				}
-			}
-		}
-		//row C
-		else if (i == 2)
-		{
-			if (n == 0)
-			{
-				while (c1.empty())
-				{
-					c1.push(0);
-				}
-			}
-			else if (n == 1)
-			{
-				while (c2.empty())
-				{
-					c2.push(0);
-				}
-			}
-			else if (n == 2)
-			{
-				while (c3.empty())
-				{
-					c3.push(0);
-				}
-			}
-			else if (n == 3)
-			{
-				while (c4.empty())
-				{
-					c4.push(0);
-				}
-			}
-			else if (n == 4)
-			{
-				while (c5.empty())
-				{
-					c5.push(0);
-				}
-			}
-		}
-		//row D
-		else if (i == 3)
-		{
-			if (n == 0)
-			{
-				while (d1.empty())
-				{
-					d1.push(0);
-				}
-			}
-			else if (n == 1)
-			{
-				while (d2.empty())
-				{
-					d2.push(0);
-				}
-			}
-			else if (n == 2)
-			{
-				while (d3.empty())
-				{
-					d3.push(0);
-				}
-			}
-			else if (n == 3)
-			{
-				while (d4.empty())
-				{
-					d4.push(0);
-				}
-			}
-			else if (n == 4)
-			{
-				while (d5.empty())
-				{
-					d5.push(0);
-				}
-			}
-		}
-		//row E
-		else if (i == 4)
-		{
-			if (n == 0)
-			{
-				while (e1.empty())
-				{
-					e1.push(0);
-				}
-			}
-			else if (n == 1)
-			{
-				while (e2.empty())
-				{
-					e2.push(0);
-				}
-			}
-			else if (n == 2)
-			{
-				while (e3.empty())
-				{
-					e3.push(0);
-				}
-			}
-			else if (n == 3)
-			{
-				while (e4.empty())
-				{
-					e4.push(0);
-				}
-			}
-			else if (n == 4)
-			{
-				while (e5.empty())
-				{
-					e5.push(0);
-				}
-			}
-		}
-		//row F
-		else if (i == 5)
-		{
-			if (n == 0)
-			{
-				while (f1.empty())
-				{
-					f1.push(0);
-				}
-			}
-			else if (n == 1)
-			{
-				while (f2.empty())
-				{
-					f2.push(0);
-				}
-			}
-			else if (n == 2)
-			{
-				while (f3.empty())
-				{
-					f3.push(0);
-				}
-			}
-			else if (n == 3)
-			{
-				while (f4.empty())
-				{
-					f4.push(0);
-				}
-			}
-			else if (n == 4)
-			{
-				while (f5.empty())
-				{
-					f5.push(0);
-				}
-			}
-		}
-		//row G
-		else if (i == 6)
-		{
-			if (n == 0)
-			{
-				while (g1.empty())
-				{
-					g1.push(0);
-				}
-			}
-			else if (n == 1)
-			{
-				while (g2.empty())
-				{
-					g2.push(0);
-				}
-			}
-			else if (n == 2)
-			{
-				while (g3.empty())
-				{
-					g3.push(0);
-				}
-			}
-			else if (n == 3)
-			{
-				while (g4.empty())
-				{
-					g4.push(0);
-				}
-			}
-			else if (n == 4)
-			{
-				while (g5.empty())
-				{
-					g5.push(0);
-				}
-			}
+			slot.quantity = 0; // set the displayed count to empty
 		}
 	}
-	// this function will use the global stack variables and return their top values to be displayed in the display function
-	//this is done by taking the variables passed in from display (the ith row and the nth column) and using the if/else statments for comparison
-	{
-	if (i == 0)
-	{
-		if (n == 0)
-			return a1.top();
-		else if (n == 1)
-			return a2.top();
-		else if (n == 2)
-			return a3.top();
-		else if (n == 3)
-			return a4.top();
-		else if (n == 4)
-			return a5.top();
-	}
-	else if (i == 1)
-	{
-		if (n == 0)
-			return b1.top();
-		else if (n == 1)
-			return b2.top();
-		else if (n == 2)
-			return b3.top();
-		else if (n == 3)
-			return b4.top();
-		else if (n == 4)
-			return b5.top();
-	}
-	else if (i == 2)
-	{
-		if (n == 0)
-			return c1.top();
-		else if (n == 1)
-			return c2.top();
-		else if (n == 2)
-			return c3.top();
-		else if (n == 3)
-			return c4.top();
-		else if (n == 4)
-			return c5.top();
-	}
-	else if (i == 3)
-	{
-		if (n == 0)
-			return d1.top();
-		else if (n == 1)
-			return d2.top();
-		else if (n == 2)
-			return d3.top();
-		else if (n == 3)
-			return d4.top();
-		else if (n == 4)
-			return d5.top();
-	}
-	else if (i == 4)
-	{
-		if (n == 0)
-			return e1.top();
-		else if (n == 1)
-			return e2.top();
-		else if (n == 2)
-			return e3.top();
-		else if (n == 3)
-			return e4.top();
-		else if (n == 4)
-			return e5.top();
-	}
-	else if (i == 5)
-	{
-		if (n == 0)
-			return f1.top();
-		else if (n == 1)
-			return f2.top();
-		else if (n == 2)
-			return f3.top();
-		else if (n == 3)
-			return f4.top();
-		else if (n == 4)
-			return f5.top();
-	}
-	else if (i == 6)
-	{
-		if (n == 0)
-			return g1.top();
-		else if (n == 1)
-			return g2.top();
-		else if (n == 2)
-			return g3.top();
-		else if (n == 3)
-			return g4.top();
-		else if (n == 4)
-			return g5.top();
-	}
-	}
-	return 0;
 }
 
-// function will construct the visual of the vending machine
-void VendingMachine::display()
+bool VendingMachine::loadCell(CellPosition position)
 {
-	cout << "\t----------------------------" << endl;
-	cout << "\t| /| 1 | 2 | 3 | 4 | 5 |\\ |" << endl;
-	cout << "\t----------------------------" << endl;
-	for (int i = 0; i < R; i++)
-	{// for loop will construct row by row and below if statement will output designation for each row 
-		if (i == 0)
-			cout << "\t|A/";
-		else if (i == 1)
-			cout << "\t|B/";
-		else if (i == 2)
-			cout << "\t|C/";
-		else if (i == 3)
-			cout << "\t|D/";
-		else if (i == 4)
-			cout << "\t|E/";
-		else if (i == 5)
-			cout << "\t|F/";
-		else if (i == 6)
-			cout << "\t|G/";
-
-		for (int n = 0; n < C; n++)
-		{// for loop for the columns
-			content[i][n] = update(i, n);
-			cout << "|" << setw(2) << content[i][n] << " ";
-		}
-		if (i == 0)
-			cout << "|\\A|" << endl;
-		else if (i == 1)
-			cout << "|\\B|" << endl;
-		else if (i == 2)
-			cout << "|\\C|" << endl;
-		else if (i == 3)
-			cout << "|\\D|" << endl;
-		else if (i == 4)
-			cout << "|\\E|" << endl;
-		else if (i == 5)
-			cout << "|\\F|" << endl;
-		else if (i == 6)
-			cout << "|\\G|" << endl;
-		cout << "\t----------------------------" << endl;
+	if (!isValid(position)) // prevent an invalid row or column from accessing the array
+	{
+		return false;
 	}
-	cout << "\t|        || PUSH ||       |" << endl;
+
+	slots[position.row][position.column].quantity = MAX_INVENTORY; // fill the selected cell to 10
+	return true;
 }
 
-// function that works identical to display function, however does not use update or the global stacks, instead uses the pass price array to show prices of each cell
-void VendingMachine::showPrice()
+bool VendingMachine::unloadCell(CellPosition position)
 {
-		cout << "\t------------------------------------------" << endl;
-		cout << "\t| /|   1  |   2  |   3  |   4  |   5  |\\ |" << endl;
-		cout << "\t------------------------------------------" << endl;
-		for (int i = 0; i < R; i++)
-		{// for loop will construct row by row and below if statement will output designation for each row 
-			if (i == 0)
-				cout << "\t|A/";
-			else if (i == 1)
-				cout << "\t|B/";
-			else if (i == 2)
-				cout << "\t|C/";
-			else if (i == 3)
-				cout << "\t|D/";
-			else if (i == 4)
-				cout << "\t|E/";
-			else if (i == 5)
-				cout << "\t|F/";
-			else if (i == 6)
-				cout << "\t|G/";
+	if (!isValid(position)) // prevent an invalid row or column from accessing the array
+	{
+		return false;
+	}
 
-			for (int n = 0; n < C; n++)
-			{// for loop for the columns
-				cout << "|" << setw(5) << fixed << setprecision(2) << returnPrice(i, n);
-			}
-			if (i == 0)
-				cout << "|\\A|" << endl;
-			else if (i == 1)
-				cout << "|\\B|" << endl;
-			else if (i == 2)
-				cout << "|\\C|" << endl;
-			else if (i == 3)
-				cout << "|\\D|" << endl;
-			else if (i == 4)
-				cout << "|\\E|" << endl;
-			else if (i == 5)
-				cout << "|\\F|" << endl;
-			else if (i == 6)
-				cout << "|\\G|" << endl;
-			cout << "\t------------------------------------------" << endl;
+	slots[position.row][position.column].quantity = 0; // empty the selected cell
+	return true;
+}
+
+PurchaseResult VendingMachine::purchase(CellPosition position, int availableCreditInCents)
+{
+	if (!isValid(position)) // return an error before trying to read an invalid cell
+	{
+		return { PurchaseStatus::InvalidCell, 0, availableCreditInCents };
+	}
+
+	Slot& selectedSlot = slots[position.row][position.column]; // store a reference to the selected cell for the remaining checks
+
+	if (selectedSlot.quantity == 0) // an empty cell cannot vend an item
+	{
+		return { PurchaseStatus::OutOfStock, selectedSlot.priceInCents, availableCreditInCents };
+	}
+
+	if (availableCreditInCents < selectedSlot.priceInCents) // compare money as whole cents to avoid floating point rounding
+	{
+		return { PurchaseStatus::InsufficientCredit, selectedSlot.priceInCents, availableCreditInCents };
+	}
+
+	selectedSlot.quantity--; // remove one item after all purchase checks have passed
+	availableCreditInCents -= selectedSlot.priceInCents; // deduct the selected price from the customer's credit
+	return { PurchaseStatus::Ok, selectedSlot.priceInCents, availableCreditInCents };
+}
+
+int VendingMachine::quantityAt(CellPosition position) const
+{
+	if (!isValid(position)) // return a safe value when the caller supplies an invalid cell
+	{
+		return 0;
+	}
+
+	return slots[position.row][position.column].quantity;
+}
+
+int VendingMachine::priceAt(CellPosition position) const
+{
+	if (!isValid(position)) // return a safe value when the caller supplies an invalid cell
+	{
+		return 0;
+	}
+
+	return slots[position.row][position.column].priceInCents;
+}
+
+void VendingMachine::displayInventory(ostream& output) const
+{
+	output << "\t----------------------------\n";
+	output << "\t| /| 1 | 2 | 3 | 4 | 5 |\\ |\n";
+	output << "\t----------------------------\n";
+
+	for (size_t row = 0; row < MACHINE_ROWS; row++) // construct the display one lettered row at a time
+	{
+		const char rowLabel = static_cast<char>('A' + row); // convert row 0-6 to its A-G label
+		output << "\t|" << rowLabel << "/";
+
+		for (size_t column = 0; column < MACHINE_COLUMNS; column++) // add the five inventory counts for this row
+		{
+			output << "|" << setw(2) << slots[row][column].quantity << " ";
 		}
-		cout << "\t|                || PUSH ||              |" << endl;
+
+		output << "|\\" << rowLabel << "|\n";
+		output << "\t----------------------------\n";
+	}
+
+	output << "\t|        || PUSH ||       |\n";
 }
 
-/* ErrorStatus VendingMachine
+void VendingMachine::displayPrices(ostream& output) const
 {
-	if
+	const ios::fmtflags previousFlags = output.flags(); // save the caller's existing number formatting
+	const streamsize previousPrecision = output.precision(); // save the caller's existing decimal precision
+
+	output << fixed << setprecision(2); // display every price with two decimal places
+	output << "\t-----------------------------------------------\n";
+	output << "\t| /|    1 |    2 |    3 |    4 |    5 |\\ |\n";
+	output << "\t-----------------------------------------------\n";
+
+	for (size_t row = 0; row < MACHINE_ROWS; row++) // construct the price display one lettered row at a time
+	{
+		const char rowLabel = static_cast<char>('A' + row); // convert row 0-6 to its A-G label
+		output << "\t|" << rowLabel << "/";
+
+		for (size_t column = 0; column < MACHINE_COLUMNS; column++) // add the five prices for this row
+		{
+			const double priceInDollars = slots[row][column].priceInCents / 100.0; // convert cents for display only
+			output << "|" << setw(6) << priceInDollars;
+		}
+
+		output << "|\\" << rowLabel << "|\n";
+		output << "\t-----------------------------------------------\n";
+	}
+
+	output << "\t|                   || PUSH ||                |\n";
+	output.flags(previousFlags); // restore the number formatting used before this function
+	output.precision(previousPrecision); // restore the previous decimal precision
 }
-*/
+
+bool VendingMachine::isValid(CellPosition position)
+{
+	return position.row < MACHINE_ROWS && position.column < MACHINE_COLUMNS; // both indexes must remain inside the fixed grid
+}
+
+// DEPRECATED: the original load and unload functions pushed or popped every number from 0 to 10
+// on 35 separate stacks. The quantity assignments above keep the same visible counts and results
+// without retaining ten historical integers for every full cell.
+
+// DEPRECATED: the original update function contained an A1-G5 if/else tree to find a stack.
+// SlotGrid allows the validated row and column to access the matching cell directly.
+
+// DEPRECATED: the original setPrice function used rand() and was called twice during startup.
+// setPrices now uses the standard random library once during construction and stores prices as cents.
+

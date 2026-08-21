@@ -127,10 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="consoleUI.cpp" />
     <ClCompile Include="Machine back.cpp" />
     <ClCompile Include="Vending Machine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="consoleUI.h" />
     <ClInclude Include="machineHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
